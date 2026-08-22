@@ -1,0 +1,12 @@
+[Unit]
+Description=Battery Limit Notifier
+After=graphical-session.target
+
+[Service]
+# __EXEC_PATH__ replaced in install.sh
+ExecStart=/bin/bash __EXEC_PATH__
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
