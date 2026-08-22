@@ -33,7 +33,7 @@ ff02::2 ip6-allrouters
 
 def fetch_blocked_lines(url):
     """Download the blocklist and keep only the '0.0.0.0 <domain>' lines."""
-    req = urllib.request.Request(url, headers={"User-Agent": "linux-setup"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Scripts"})
     with urllib.request.urlopen(req, timeout=30) as resp:
         text = resp.read().decode("utf-8", errors="replace")
     return [line for line in text.splitlines() if line.startswith("0.0.0.0 ")]

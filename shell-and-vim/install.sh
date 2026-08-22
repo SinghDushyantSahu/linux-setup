@@ -7,7 +7,7 @@ source "$SCRIPT_DIR/../lib/common.sh"
 
 SRC_ALIASES="$SCRIPT_DIR/.bash_aliases"
 SRC_VIMRC="$SCRIPT_DIR/.vimrc"
-MARKER="# linux-setup: load aliases"
+MARKER="# Scripts: load aliases"
 
 # Install both dotfiles into one home directory.
 install_to_home() {

@@ -1,4 +1,4 @@
-# linux-setup
+# Linux Scripts
 
 My personal setup for a Debian machine. One repo, one script. After a fresh
 install, clone this and run `./setup.sh` to get everything back.
@@ -6,8 +6,8 @@ install, clone this and run `./setup.sh` to get everything back.
 ## Quick start
 
 ```bash
-git clone <your-repo-url> linux-setup
-cd linux-setup
+git clone https://github.com/SinghDushyantSahu/linux-setup.git Scripts
+cd Scripts
 ./setup.sh
 ```
 
