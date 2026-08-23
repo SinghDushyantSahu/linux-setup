@@ -8,6 +8,7 @@ install, clone this and run `./setup.sh` to get everything back.
 ```bash
 git clone https://github.com/SinghDushyantSahu/linux-setup.git Scripts
 cd Scripts
+chmod +x system-packages/packages.sh setup.sh
 ./setup.sh
 ```
 
