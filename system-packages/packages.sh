@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # Basic CLI tools.
-ESSENTIALS=(curl wget git ca-certificates tree htop unzip zip)
+ESSENTIALS=(curl wget git ca-certificates tree unzip zip network-manager)
 
 # Minimal GNOME desktop + login screen.
 DESKTOP=(gnome-core gdm3)
@@ -11,11 +11,18 @@ DESKTOP=(gnome-core gdm3)
 # Useful GUI apps.
 APPS=(chromium vlc vim-gtk3 gnome-tweaks gnome-shell-extension-manager fonts-jetbrains-mono libnotify-bin)
 
-# GNOME apps to remove (browser replaces these).
+# Desktop pieces to protect from autoremove (so removing extras can't break GNOME).
+KEEP=(gnome-shell gnome-session gnome-control-center gnome-settings-daemon nautilus gnome-terminal gnome-console gdm3 network-manager)
+
+# GNOME apps to remove.
 REMOVE=(
     gnome-calculator gnome-characters gnome-contacts gnome-maps gnome-weather
     gnome-music gnome-sound-recorder gnome-snapshot gnome-tour gnome-text-editor
-    totem simple-scan evince papers
+    totem simple-scan evince papers nm-connection-editor
+    gnome-connections gnome-font-viewer gnome-calendar gnome-clocks
+    gnome-logs malcontent loupe eog ibus
+    gnome-disk-utility gnome-system-monitor baobab
+    system-config-printer
 )
 
 export DEBIAN_FRONTEND=noninteractive
@@ -26,6 +33,9 @@ $SUDO apt-get update -y
 
 echo "==> Installing essentials + desktop + apps..."
 $SUDO apt-get install -y "${ESSENTIALS[@]}" "${DESKTOP[@]}" "${APPS[@]}"
+
+# Protect the desktop so purging extras can't cascade into it.
+$SUDO apt-mark manual "${KEEP[@]}" 2>/dev/null || true
 
 # Remove only the extras that are actually installed, so apt won't error.
 to_remove=()
