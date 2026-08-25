@@ -1,13 +1,12 @@
 #!/bin/bash
-# Sends a desktop notification when the battery reaches the upper limit while
-# charging, so you remember to unplug. Runs forever as a systemd --user service.
+# For battery longevity, sends desktop notification when battery level reaches upper limit. Runs forever as systemd --user service.
 
 # Upper limit in percent
 LIMIT="${LIMIT:-80}"
 # Interval in seconds to recheck battery level
 INTERVAL="${INTERVAL:-60}"
 
-# Find the first battery. If desktop has none -> exit quiety
+# Skip on machines without a battery.
 BATTERY_PATH="${BATTERY_PATH:-$(find /sys/class/power_supply/ -maxdepth 1 -name 'BAT*' 2>/dev/null | head -n 1)}"
 if [ -z "$BATTERY_PATH" ]; then
     echo "No battery found (desktop machine?). Nothing to do."
@@ -18,7 +17,7 @@ fi
 ALREADY_NOTIFIED=false
 
 while true; do
-    # Read status/capacity defensively, as the files can disappear briefly
+    # Read battery status defensively, as battery file can briefly disappear.
     STATUS="$(cat "$BATTERY_PATH/status" 2>/dev/null || echo Unknown)"
     CAPACITY="$(cat "$BATTERY_PATH/capacity" 2>/dev/null || echo -1)"
 
@@ -30,7 +29,7 @@ while true; do
             ALREADY_NOTIFIED=true
         fi
     else
-        # Not charging -> reset.
+        # If not charging, reset the flag.
         ALREADY_NOTIFIED=false
     fi
 

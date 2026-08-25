@@ -1,9 +1,8 @@
 #!/bin/bash
-# common.sh - small helpers shared by all the setup scripts.
-# This file is meant to be *sourced*, not run directly.
+# helper functions for all the setup scripts.
+# This file is meant to be sourced, not direct run.
 
-# --- Colored logging ---------------------------------------------------------
-# Colors are only used when writing to a real terminal.
+# Coloring of responses.
 if [ -t 1 ]; then
     _C_RESET=$'\e[0m'; _C_BLUE=$'\e[94m'; _C_GREEN=$'\e[32m'
     _C_YELLOW=$'\e[33m'; _C_RED=$'\e[31m'
@@ -16,9 +15,7 @@ ok()   { printf '%s[ok]%s %s\n' "$_C_GREEN"  "$_C_RESET" "$*"; }
 warn() { printf '%s[!]%s %s\n'  "$_C_YELLOW" "$_C_RESET" "$*" >&2; }
 err()  { printf '%s[x]%s %s\n'  "$_C_RED"    "$_C_RESET" "$*" >&2; }
 
-# --- Yes/No prompt -----------------------------------------------------------
-# Usage: ask_yn "Do the thing?" [default]   (default is "n" unless given "y")
-# Returns 0 for yes, 1 for no. If not attached to a terminal, uses the default.
+# Yes/No prompts
 ask_yn() {
     local prompt="$1" default="${2:-n}" reply hint
     if [ "$default" = "y" ]; then hint="[Y/n]"; else hint="[y/N]"; fi
@@ -35,13 +32,13 @@ ask_yn() {
     esac
 }
 
-# --- Misc helpers ------------------------------------------------------------
 have() { command -v "$1" >/dev/null 2>&1; }   # is a command available?
 
-# The real (non-root) user and home, even when the script is run via sudo.
+# Non-root user and home identifier.
 real_user() {
     if [ -n "${SUDO_USER:-}" ]; then echo "$SUDO_USER"; else echo "${USER:-$(id -un)}"; fi
 }
+
 real_home() {
     if [ -n "${SUDO_USER:-}" ]; then
         getent passwd "$SUDO_USER" | cut -d: -f6
@@ -50,7 +47,7 @@ real_home() {
     fi
 }
 
-# Back up a file if it exists and is a normal file (not already our symlink).
+# To back up a file if it exists and not a symlink.
 backup_if_real_file() {
     local target="$1"
     if [ -e "$target" ] && [ ! -L "$target" ]; then
@@ -60,3 +57,4 @@ backup_if_real_file() {
         warn "Backed up existing $target -> $backup"
     fi
 }
+

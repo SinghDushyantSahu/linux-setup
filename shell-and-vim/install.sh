@@ -1,5 +1,6 @@
 #!/bin/bash
-# Symlink .bash_aliases and .vimrc into the normal user's home AND root's home,
+# To symlink .bash_aliases and .vimrc into the normal user's home AND root's home.
+
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -9,7 +10,7 @@ SRC_ALIASES="$SCRIPT_DIR/.bash_aliases"
 SRC_VIMRC="$SCRIPT_DIR/.vimrc"
 MARKER="# Scripts: load aliases"
 
-# Install both dotfiles into one home directory.
+# Install both dotfiles into home directory.
 install_to_home() {
     local home="$1" run="${2:-}"
 
@@ -50,3 +51,5 @@ else
 fi
 
 ok "Shell & vim setup complete. Open a new terminal to see the changes."
+
+

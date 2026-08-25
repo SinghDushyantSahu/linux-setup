@@ -5,13 +5,13 @@ set -euo pipefail
 # Basic CLI tools.
 ESSENTIALS=(curl wget git ca-certificates tree unzip zip network-manager)
 
-# Minimal GNOME desktop + login screen.
+# Minimal GNOME desktop and login screen.
 DESKTOP=(gnome-core gdm3)
 
 # Useful GUI apps.
-APPS=(chromium vlc vim-gtk3 gnome-tweaks gnome-shell-extension-manager fonts-jetbrains-mono libnotify-bin)
+APPS=(chromium vlc vim-gtk3 gnome-tweaks gnome-shell-extension-gsconnect fonts-jetbrains-mono libnotify-bin)
 
-# Desktop pieces to protect from autoremove (so removing extras can't break GNOME).
+# Desktop pieces to protect from autoremove.
 KEEP=(gnome-shell gnome-session gnome-control-center gnome-settings-daemon nautilus gnome-terminal gnome-console gdm3 network-manager)
 
 # GNOME apps to remove.
@@ -51,3 +51,5 @@ if [ "${#to_remove[@]}" -gt 0 ]; then
 fi
 
 echo "[ok] Packages done. Reboot to start the desktop."
+
+

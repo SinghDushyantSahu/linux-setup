@@ -1,6 +1,7 @@
 #!/bin/bash
-# Install the battery notifier as a per-user systemd service.
-# Run this as your normal user
+# Installs battery notifier as --user systemd service.
+# Run this as your non root user
+
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,7 +14,7 @@ fi
 
 info "Installing battery notifier..."
 
-# Skip on machines without a battery (BATTERY_PATH can override detection)
+# Skip on machines without a battery
 BATTERY_PATH="${BATTERY_PATH:-$(find /sys/class/power_supply/ -maxdepth 1 -name 'BAT*' 2>/dev/null | head -n 1)}"
 if [ -z "$BATTERY_PATH" ]; then
     warn "No battery detected - skipping battery notifier."

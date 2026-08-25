@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-"""Block adware / tracking domains by rewriting /etc/hosts from a blocklist.
+"""Block adware / tracking domains by rewriting /etc/hosts from a blocklist."""
 
-Run with sudo:      sudo python3 update_hosts.py
-Preview only:       python3 update_hosts.py --dry-run
-Write elsewhere:    HOSTS_FILE=/tmp/hosts python3 update_hosts.py   (for testing)
-"""
 import os
 import socket
 import sys
@@ -12,8 +8,6 @@ import urllib.request
 
 BLOCKLIST_URL = "https://hblock.molinero.dev/hosts"
 HOSTS_FILE = os.environ.get("HOSTS_FILE", "/etc/hosts")
-DRY_RUN = "--dry-run" in sys.argv
-
 
 def base_hosts():
     """The standard local entries, with the real hostname filled in."""
@@ -53,11 +47,7 @@ def main():
     content = base_hosts() + "\n" + "\n".join(blocked) + "\n"
     print(f"{len(blocked)} blocked hosts prepared.")
 
-    if DRY_RUN:
-        print(f"[dry-run] would write {HOSTS_FILE} ({len(content)} bytes)")
-        return 0
-
-    # Back up the existing file once, then write atomically (temp + replace).
+    # Back up the existing file and then write.
     try:
         if os.path.exists(HOSTS_FILE):
             backup = HOSTS_FILE + ".backup"

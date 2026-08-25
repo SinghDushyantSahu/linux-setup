@@ -1,12 +1,12 @@
 #!/bin/bash
-# Set up a fresh Debian machine. Run as your normal user: ./setup.sh
-# Asks y/n before each part.
+# Set up a fresh Debian machine. Run as ./setup.sh
+
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$REPO_DIR/lib/common.sh"
 
-# Needs a normal user (root breaks systemd --user and home symlinks).
+# Run only as non root user (root breaks systemd --user and home symlinks).
 if [ "$(id -u)" -eq 0 ]; then
     err "Run setup.sh as your normal user, not with sudo."
     exit 1
