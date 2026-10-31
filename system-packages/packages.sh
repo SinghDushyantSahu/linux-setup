@@ -9,7 +9,7 @@ ESSENTIALS=(curl wget git ca-certificates tree unzip zip network-manager)
 DESKTOP=(gnome-core gdm3)
 
 # Useful GUI apps.
-APPS=(chromium vlc vim-gtk3 gnome-tweaks gnome-shell-extension-gsconnect fonts-jetbrains-mono libnotify-bin)
+APPS=(chromium vlc vim-gtk3 gnome-tweaks gnome-shell-extension-manager gnome-shell-extension-gsconnect fonts-jetbrains-mono aria2 libnotify-bin)
 
 # Desktop pieces to protect from autoremove.
 KEEP=(gnome-shell gnome-session gnome-control-center gnome-settings-daemon nautilus gnome-terminal gnome-console gdm3 network-manager)
@@ -22,8 +22,9 @@ REMOVE=(
     gnome-connections gnome-font-viewer gnome-calendar gnome-clocks
     gnome-logs malcontent loupe eog ibus
     gnome-disk-utility gnome-system-monitor baobab
-    system-config-printer
-)
+    system-config-printer firefox-esr shotwell seahorse file-roller 
+    libreoffice-core libreoffice-common libreoffice-writer libreoffice-calc libreoffice-impress
+evolution)
 
 export DEBIAN_FRONTEND=noninteractive
 SUDO=""; [ "$(id -u)" -ne 0 ] && SUDO="sudo"
